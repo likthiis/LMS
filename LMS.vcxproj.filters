@@ -21,12 +21,60 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Book.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Student.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Teacher.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Admin.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="LMS.cpp">
+    <ClCompile Include="LMSMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Book.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Admin.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Student.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Teacher.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SQLUse\SQLIntermediary.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\Search.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\Register.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\Borrow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\Manage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\Login.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\Recommendation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\InfoDiffusion.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
