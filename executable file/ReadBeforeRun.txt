@@ -1,0 +1,1 @@
+#libmysql.dll is necessary to help running, dont miss it.Put it on the same path with the executable file.

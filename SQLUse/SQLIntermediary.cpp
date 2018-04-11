@@ -1,3 +1,4 @@
+#include "../stdafx.h"
 #include <iostream>
 #include <winsock.h>
 #include <mysql.h>

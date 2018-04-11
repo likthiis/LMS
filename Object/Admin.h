@@ -1,29 +1,16 @@
 #pragma once
 #include <string>
-class Admin {
-	private:
-		std::string id;
-		std::string last_name;
-		std::string first_name;
-		std::string name_phoneticize;
-	public:
-		//标准操作。
-		       void setId(std::string id);
-		std::string getId();
+#include "User.h"
 
-		       void setLastName(std::string last_name);
-		std::string getLastName();
+class Admin : public User{
+private:
+	//std::string name_phoneticize;
+public:
 
-		       void setFirstName(std::string first_name);
-		std::string getFirstName();
-
-		       void setNamePhoneticize(std::string name_phoneticize);
-		std::string getNamePhoneticize();
-
-		//自定义操作。
-		void BookAduit();
-		void BookCatalog();
-		void BookPurchase();
-		void RecommendationAduit();
-		void Register();
+	//自定义操作。
+	void Aduit();
+	void Catalog();
+	void Purchase();
+	void RecommendationAduit();
+	void Register();
 };

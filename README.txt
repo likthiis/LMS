@@ -1,6 +1,11 @@
 #version 1.0
 #I just try to complete a simple system to test my skill, do not use it in formal project.
 
+#Now if I can run this program before I commit, an executable file will be sent to the file system in website of github.
+#If anyone want to help me test it, it is my pleasure.Of course, before I finish this system, the file can only run some
+#functions.
+
+
 #---------------------------------------------------------------------------------------------------------------------------------
 #The functions of this system:
 #1. search module

@@ -1,3 +1,4 @@
+#include "../stdafx.h"
 #include "Book.h"
 
 //void Book::setISBN(std::string ISBN) {
