@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #define AUTHORSIZE 16   //系统内设的作者最大数量。
-#define LOCATIONSIZE 4  //系统内设的分馆最大数量。
 
 //示范类。标准格式。
 
@@ -10,16 +9,15 @@ private:
 	std::string bookID; //ISBN号。
 	std::string title;
 	std::string author[AUTHORSIZE]; //不止有一个作者，所以用数组来保存。
-	std::string barcode; //条码号，同样是唯一识别码。
-	short location_count[LOCATIONSIZE]; //实现一个键值对，标号对应分馆，内容是相应的馆藏数量。
-	short style;
+	unsigned all_count;
+	unsigned style;
 
 public:
 	//构造函数。
 	Book() = default;
 	Book(const std::string &ISBN) : bookID(ISBN) {}
-	Book(const std::string &ISBN, std::string new_title, std::string new_author[], std::string new_barcode) :
-		bookID(ISBN), title(new_title), barcode(new_barcode) {
+	Book(const std::string &ISBN, std::string new_title, std::string new_author[], unsigned number) :
+		bookID(ISBN), title(new_title), all_count(number) {
 		int i=0;
 		while (i < new_author->size()) {
 			author[i] = new_author[i];
@@ -38,23 +36,4 @@ public:
 	std::string Barcode() { return this->barcode; }
 	short Style() { return this->style; }
 
-
-
-	//void setISBN(std::string ISBN);
-	//std::string getISBN();
-
-	//void setTitle(std::string title);
-	//std::string getTitle();
-
-	//void setAuthor(std::string author[]);
-	//std::string getAuthor();
-
-	//void setBarcode(std::string barcode);
-	//std::string getBarcode();
-
-	//void setLocationCount(short location_count[]);
-	//short getLocationCount();
-
-	//void setStyle(short style);
-	//short getStyle();
 };

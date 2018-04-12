@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="Object\Admin.h" />
     <ClInclude Include="Object\Book.h" />
+    <ClInclude Include="Object\BookHasCataloged.h" />
     <ClInclude Include="Object\Student.h" />
     <ClInclude Include="Object\Teacher.h" />
     <ClInclude Include="Object\User.h" />
@@ -160,19 +161,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LMSMain.cpp" />
+    <ClCompile Include="Module\AdminPanel.cpp" />
     <ClCompile Include="Module\Borrow.cpp" />
     <ClCompile Include="Module\InfoDiffusion.cpp" />
     <ClCompile Include="Module\Login.cpp" />
     <ClCompile Include="Module\Manage.cpp" />
     <ClCompile Include="Module\Recommendation.cpp" />
     <ClCompile Include="Module\Register.cpp" />
+    <ClCompile Include="Module\Return.cpp" />
     <ClCompile Include="Module\Search.cpp" />
+    <ClCompile Include="Module\SQLIntermediary.cpp" />
+    <ClCompile Include="Module\UserPanel.cpp" />
     <ClCompile Include="Object\Admin.cpp" />
     <ClCompile Include="Object\Book.cpp" />
+    <ClCompile Include="Object\BookHasCataloged.cpp" />
     <ClCompile Include="Object\Student.cpp" />
     <ClCompile Include="Object\Teacher.cpp" />
     <ClCompile Include="Object\User.cpp" />
-    <ClCompile Include="SQLUse\SQLIntermediary.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

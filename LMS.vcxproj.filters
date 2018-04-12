@@ -36,6 +36,9 @@
     <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Object\BookHasCataloged.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -54,9 +57,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Object\Teacher.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="SQLUse\SQLIntermediary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Module\Register.cpp">
@@ -81,6 +81,21 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Module\Search.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BookHasCataloged.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\Return.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\UserPanel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\AdminPanel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Module\SQLIntermediary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
