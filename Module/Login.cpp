@@ -1,5 +1,5 @@
 /* 登录模块：用户一般会从main函数过来，进入该模块登录*/
-
+#include <windows.h>  
 #include <iostream>
 #include <string>
 #include "../Object/User.h"
@@ -18,6 +18,7 @@ void Login_User() {
 	std::string userId, password;
 
 Log:
+	system("cls");
 	std::cout << "请输入用户id和密码(或输入0和0选择离开)：" << std::endl;
 
 	std::cout << "用户名：";
@@ -36,7 +37,7 @@ Log:
 
 	int ifExist = DBLoginCheck(querySentence,basement);//我们相信这里会起作用的。
 
-	
+	ifExist = 1; //测试代码。
 	
 
 	switch (ifExist)

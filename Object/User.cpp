@@ -1,19 +1,16 @@
 #include "User.h"
 #include <iostream>
 #include <string>
+#include "Book.h"
 
 extern void SearchUser(std::string querySentence);
 
-User::User() {
-	std::cout << "请输入用户的相关信息，包括\n1.唯一标识码\n2.姓\n3.名\n4.邮箱\n" << std::endl;
-	std::cout << "\n唯一标识码：" << std::endl;
-	std::cin >> this->ID;
-	std::cout << "姓：" << std::endl;
-	std::cin >> this->last_name;
-	std::cout << "名：" << std::endl;
-	std::cin >> this->first_name;
-	std::cout << "邮箱：" << std::endl;
-	std::cin >> this->email;
+void User::UserLogin(const std::string & id, std::string lastName, std::string firstName, std::string Email){
+	this->ID = id;
+	this->last_name = lastName;
+	this->first_name = firstName;
+	this->email = Email;
+	return;
 }
 
 std::string User::NewUserQuery() {
@@ -33,8 +30,15 @@ void User::QueryInfo(){
 	SearchUser(query);
 }
 
-void User::UserReco(){
-
+Book User::UserReco(){
+	//只需输入isbn和书名即可。
+	std::string isbn, title;
+	std::cout << "请输入唯一识别码和书名:\n请输入唯一识别码：";
+	std::cin >> isbn;
+	std::cout << "请输入书名：";
+	std::cin >> title;
+	Book book(isbn, title);
+	return book;
 }
 
 User::~User()

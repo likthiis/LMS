@@ -1,5 +1,15 @@
-﻿  BookHasCataloged.cpp
-  Book.cpp
-  Search.cpp
+﻿  SQLIntermediary.cpp
+  UserPanel.cpp
+  User.cpp
   正在生成代码...
+  正在编译...
+  AdminPanel.cpp
+  Teacher.cpp
+  Student.cpp
+  Admin.cpp
+  Login.cpp
+  正在生成代码...
+  正在跳过...(未检测到相关更改)
+  BookHasCataloged.cpp
+  Book.cpp
   LMS.vcxproj -> C:\Users\WZF\Desktop\LMS\code\system\LMS\x64\Debug\LMS.exe

@@ -6,7 +6,7 @@ void AdminPanel(Admin admin) {
 	int choose;
 	//功能面板循环。
 	while (1) {
-		std::cout << "菜单：\n1.图书编目 \n2.用户注册 \n3.荐购处理 \n4.图书购买 \n5.用户借阅处理 \n6.用户归还处理\n请输入你的选择：" << std::endl;
+		std::cout << "菜单：\n1.图书编目 \n2.用户注册 \n3.荐购处理 \n4.图书购买 \n5.用户借阅处理 \n6.用户归还处理 \n7.退出 \n请输入你的选择：" << std::endl;
 		std::cin >> choose;//先不写容错。
 		if (choose == 1) {
 			admin.Catalog();
@@ -31,6 +31,9 @@ void AdminPanel(Admin admin) {
 		if (choose == 6) {
 			admin.Back();
 			continue;
+		}
+		if (choose == 7) {
+			break;
 		}
 	}
 	return;

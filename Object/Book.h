@@ -15,8 +15,9 @@ private:
 
 public:
 	//构造函数。
-	Book();
+	Book()=default;
 	Book(const std::string &ISBN) : bookID(ISBN) {}
+	Book(const std::string &ISBN, std::string Title): bookID(ISBN), title(Title) {}
 	Book(const std::string &ISBN, std::string new_title, std::string new_author, unsigned number) :
 		bookID(ISBN), title(new_title), author(new_author), all_count(number) {
 	}
@@ -27,6 +28,7 @@ public:
 	 *  获取题名[3]获取条码号[4]获取藏
 	 *  书类型。
 	 */
+	void Catalog(std::string id,std::string title,std::string author,unsigned count,unsigned style);
 	std::string Isbn() const { return this->bookID; }
 	std::string Title() { return this->title; }
 	short Style() { return this->style; }

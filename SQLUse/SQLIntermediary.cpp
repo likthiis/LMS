@@ -22,8 +22,24 @@ void AppendBook(std::string querySentence) {
 	//图书编目
 }
 
+void BorrowBack(std::string querySentence) {
+	//图书借阅
+}
+
+void ShowRecoBook(){
+
+}
+
+void RecoBookToPurchase(std::string isbn, std::string judge) {
+
+}
+
 void AppendUser(std::string querySentence,int iden) {
 	//用户注册
+}
+
+void BookReco(Book book) {
+	//注入荐购表
 }
 
 //未完成。
