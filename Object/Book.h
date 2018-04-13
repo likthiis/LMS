@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#define AUTHORSIZE 16   //系统内设的作者最大数量。
+//#define AUTHORSIZE 16   //系统内设的作者最大数量。
 
 //示范类。标准格式。
 
@@ -8,21 +8,17 @@ class Book {
 private:
 	std::string bookID; //ISBN号。
 	std::string title;
-	std::string author[AUTHORSIZE]; //不止有一个作者，所以用数组来保存。
+	//std::string author[AUTHORSIZE]; //不止有一个作者，所以用数组来保存。
+	std::string author;
 	unsigned all_count;
 	unsigned style;
 
 public:
 	//构造函数。
-	Book() = default;
+	Book();
 	Book(const std::string &ISBN) : bookID(ISBN) {}
-	Book(const std::string &ISBN, std::string new_title, std::string new_author[], unsigned number) :
-		bookID(ISBN), title(new_title), all_count(number) {
-		int i=0;
-		while (i < new_author->size()) {
-			author[i] = new_author[i];
-			i++;
-		}
+	Book(const std::string &ISBN, std::string new_title, std::string new_author, unsigned number) :
+		bookID(ISBN), title(new_title), author(new_author), all_count(number) {
 	}
 
 
@@ -33,7 +29,6 @@ public:
 	 */
 	std::string Isbn() const { return this->bookID; }
 	std::string Title() { return this->title; }
-	std::string Barcode() { return this->barcode; }
 	short Style() { return this->style; }
 
 };

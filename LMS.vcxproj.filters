@@ -89,13 +89,13 @@
     <ClCompile Include="Module\Return.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Module\UserPanel.cpp">
+    <ClCompile Include="SQLUse\SQLIntermediary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Module\AdminPanel.cpp">
+    <ClCompile Include="Panel\AdminPanel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Module\SQLIntermediary.cpp">
+    <ClCompile Include="Panel\UserPanel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

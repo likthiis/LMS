@@ -8,6 +8,5 @@ private:
 
 public:
 
-
 	virtual ~Teacher();
 };

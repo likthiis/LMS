@@ -8,9 +8,13 @@ private:
 public:
 
 	//自定义操作。
+
+	void Back();
+	void Borrow();
+
 	void Aduit();
 	void Catalog();
 	void Purchase();
-	void RecommendationAduit();
+	void AdminReco();
 	void Register();
 };

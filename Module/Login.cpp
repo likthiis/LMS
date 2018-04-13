@@ -18,10 +18,16 @@ void Login_User() {
 	std::string userId, password;
 
 Log:
-	std::cout << "请输入用户id和密码：" << std::endl;
+	std::cout << "请输入用户id和密码(或输入0和0选择离开)：" << std::endl;
 
+	std::cout << "用户名：";
 	std::cin >> userId;
+	std::cout << "密码：";
 	std::cin >> password;
+
+	if (userId == "0"&&password == "0") {
+		return;
+	}
 
 	//使用MySQL查询信息。
 	std::string querySentence = "未完成" + userId + "未完成"; //查询语言。
@@ -30,30 +36,35 @@ Log:
 
 	int ifExist = DBLoginCheck(querySentence,basement);//我们相信这里会起作用的。
 
-	Student student;
-	Teacher teacher;
+	
+	
 
 	switch (ifExist)
 	{
 		case 0:
 			std::cout << "登录失败，请重新登录" << std::endl;
 			goto Log; //返回前面的代码。
-		case 1://是学生。
+		case 1: {//是学生。
 			//生成学生类。
+			Student student;
 			//信息处理。
 			UserPanel(student);
-			return;
-		case 2://是老师。
+			goto Log;
+		}
+		case 2: {//是老师。
 			//生成老师类。
+			Teacher teacher;
 			//信息处理。
 			UserPanel(teacher);
-			return;
-		case 3://是管理员。
-			//生成管理员类
+			goto Log;
+		}
+		case 3: {//是管理员。
+			//生成管理员类。
 			Admin admin;
 			//信息处理。
 			AdminPanel(admin);
-			return;
+			goto Log;
+		}
 
 	}
 	return;

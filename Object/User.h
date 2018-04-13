@@ -11,7 +11,7 @@ private:
 
 
 public:
-	User()=default;
+	User();
 	User(const std::string &id):ID(id) {}
 	User(const std::string &id, std::string lastName, std::string firstName, std::string Email) :
 		ID(id), last_name(lastName), first_name(firstName), email(Email) {
@@ -24,10 +24,10 @@ public:
 		this->last_name = newName.substr(0, 2);
 		this->first_name = newName.substr(2, 4);
 	}
+	std::string NewUserQuery();
+	void UserNotice();
+	void QueryInfo();
+	void UserReco();
 	virtual ~User();
-
-	virtual void Back();
-	virtual void Borrow();
-	virtual void Recommendation();
 };
 

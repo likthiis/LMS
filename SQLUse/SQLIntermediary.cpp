@@ -10,7 +10,21 @@ int DBLoginCheck(std::string querySentence,User &basement) {
 	return 0;
 }
 
+void SearchBook(std::string querySentence) {
+	//图书检索
+}
 
+void SearchUser(std::string querySentence) {
+	//用户检索
+}
+
+void AppendBook(std::string querySentence) {
+	//图书编目
+}
+
+void AppendUser(std::string querySentence,int iden) {
+	//用户注册
+}
 
 //未完成。
 void DBconnection(std::string querySentence) {
@@ -21,7 +35,7 @@ void DBconnection(std::string querySentence) {
 	const char *server = "localhost";
 	const char *user = "qinne";
 	const char *keyword = "111111";
-	const char *database = "Library";
+	const char *database = "library";
 
 	if (!mysql_real_connect(pConn, server, user, keyword, database, 0, NULL, 0)) {
 		std::cout << "无法连接数据库，原因：" << mysql_error(pConn) << std::endl;
