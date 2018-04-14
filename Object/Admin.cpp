@@ -4,13 +4,14 @@
 #include "../Object/BookHasCataloged.h"
 #include "../Object/Teacher.h"
 #include "../Object/Student.h"
+#include <Windows.h>
 #define LOCATIONSIZE 4  //系统内设的分馆最大数量。
 
 
 
 extern bool AppendBook(std::string querySentence);
-extern void AppendUser(std::string querySentence,int iden);
-extern void BorrowBack(std::string querySentence);
+extern bool AppendUser(std::string querySentence);
+extern bool BorrowBack(std::string isbn, unsigned location, bool come_back);
 extern void ShowRecoBook();
 extern void RecoBookToPurchase(std::string isbn,std::string judge);
 extern void ShowIncompleteBook();
@@ -22,29 +23,45 @@ extern void BackBookFromPurchaseBook(std::string isbn,BookHasCataloged &book);
 
 
 void Admin::Back(){
-	std::cout << "图书归还功能\n请输入ISBN号：" << std::endl;
+	std::cout << "图书归还功能\n请输入ISBN号：";
 	std::string isbn;
 	std::cin >> isbn;
-	std::cout << "请选择馆藏地点：一图书馆选1，二图书馆选2，三图书馆选3，四图书馆选4\n请选择：" << std::endl;
+	std::cout << "请选择馆藏地点：一图书馆选1，二图书馆选2，三图书馆选3，四图书馆选4\n请选择：";
 	int location;
 	std::cin >> location;
 	std::string querySentence = "查询语句";
 
-	BorrowBack(querySentence);
+	bool yn = BorrowBack(isbn, location, false);
+	if (yn == true) {
+		std::cout << "借阅成功" << std::endl;
+		Sleep(2000);
+	}
+	if (yn == false) {
+		std::cout << "借阅失败" << std::endl;
+		Sleep(2000);
+	}
 
 	return;
 }
 
 void Admin::Borrow() {
-	std::cout << "图书借阅功能\n请输入ISBN号：" << std::endl;
+	std::cout << "图书借阅功能\n请输入ISBN号：";
 	std::string isbn;
-	std::cin >> isbn;
-	std::cout << "请选择馆藏地点：一图书馆选1，二图书馆选2，三图书馆选3，四图书馆选4\n请选择：" << std::endl;
-	int location;
+	getchar();
+	std::getline(std::cin, isbn);
+	std::cout << "请选择馆藏地点：一图书馆选1，二图书馆选2，三图书馆选3，四图书馆选4\n请选择：";
+	unsigned location; 
 	std::cin >> location;
-	std::string querySentence = "查询语句";
 
-	BorrowBack(querySentence);
+	bool yn = BorrowBack(isbn, location, true);
+	if (yn == true) {
+		std::cout << "借阅成功" << std::endl;
+		Sleep(2000);
+	}
+	if (yn == false) {
+		std::cout << "借阅失败" << std::endl;
+		Sleep(2000);
+	}
 
 	return;
 }
@@ -227,27 +244,41 @@ void Admin::Register() {
 
 		std::cout << "\n添加学生请输入1，添加教师请输入2：";
 		std::cin >> choose;
-		std::cout << "请输入用户的相关信息，包括\n1.唯一标识码\n2.姓\n3.名\n4.邮箱\n" << std::endl;
-		std::cout << "唯一标识码：" << std::endl;
+		std::cout << "请输入用户的相关信息，包括\n1.唯一标识码\n2.姓\n3.名\n4.邮箱\n";
+		std::cout << "唯一标识码：";
 		std::cin >> ID;
-		std::cout << "姓：" << std::endl;
+		std::cout << "姓：";
 		std::cin >> last_name;
-		std::cout << "名：" << std::endl;
+		std::cout << "名：";
 		std::cin >> first_name;
-		std::cout << "邮箱：" << std::endl;
+		std::cout << "邮箱：";
 		std::cin >> email;
+
+		bool yn;
 
 		if (choose == 1) {
 			Student stu;
 			stu.UserLogin(ID, last_name, first_name, email);
-			std::string query = stu.NewUserQuery();
-			AppendUser(query, choose);
+			std::string query = stu.NewUserQuery(choose);
+			yn = AppendUser(query);
+			if (yn == true) {
+				std::cout << "用户注册成功。" << std::endl;
+			}
+			if (yn == false) {
+				std::cout << "用户注册失败。" << std::endl;
+			}
 		}
 		if (choose == 2) {
 			Teacher tea;
 			tea.UserLogin(ID, last_name, first_name, email);
-			std::string query = tea.NewUserQuery();
-			AppendUser(query, choose);
+			std::string query = tea.NewUserQuery(choose);
+			yn = AppendUser(query);
+			if (yn == true) {
+				std::cout << "用户注册成功。" << std::endl;
+			}
+			if (yn == false) {
+				std::cout << "用户注册失败。" << std::endl;
+			}
 		}
 
 		std::cout << "\n继续添加用户请输入1，否则输入0：";

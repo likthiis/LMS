@@ -29,9 +29,19 @@ void User::CopyDetail(std::string &id, std::string &lastName, std::string &first
 	return;
 }
 
-std::string User::NewUserQuery() {
+std::string User::NewUserQuery(int choose) {
 	std::string querySentence;
-	querySentence = "用户增语句";
+	std::string table = (choose == 1) ? "student" : "teacher";
+	querySentence = "INSERT INTO " + table +" VALUES(";
+	querySentence += "\""+ this->ID +"\",";
+	querySentence += "\"" + this->last_name + "\",";
+	querySentence += "\"" + this->first_name + "\",";
+	querySentence += "\"" + this->email + "\",";
+	querySentence += "0,";
+	querySentence += "\"欢迎使用图书馆系统！初始密码身份证后六位！\",";
+	querySentence += "\"111111\"";
+	querySentence += ")";
+	//std::cout << querySentence << std::endl;
 	return querySentence;
 }
 

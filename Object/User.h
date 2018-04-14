@@ -30,7 +30,7 @@ public:
 	void UserLogin(const std::string &id, std::string lastName, std::string firstName, std::string Email);
 
 	void CopyDetail(std::string &id, std::string &lastName, std::string &firstName, std::string &Email);
-	std::string NewUserQuery();
+	std::string NewUserQuery(int choose);
 	void UserNotice();
 	Book UserReco();
 	virtual ~User();

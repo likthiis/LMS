@@ -7,7 +7,7 @@ std::string BookHasCataloged::NewBookQuery(){
 	std::string querySentence;
 	//将馆藏数目转换成string格式。
 	std::string locationCountLine;
-	locationCountLine = std::to_string(this->location_count[0]) + "_" + std::to_string(this->location_count[0]) + "_" + std::to_string(this->location_count[0]) + "_" + std::to_string(this->location_count[0]);
+	locationCountLine = std::to_string(this->location_count[0]) + "_" + std::to_string(this->location_count[1]) + "_" + std::to_string(this->location_count[2]) + "_" + std::to_string(this->location_count[3]);
 	querySentence = "INSERT INTO book VALUES(\"" + this->Isbn() + "\",";
 	querySentence += "\"" + this->Title() +"\",";
 	querySentence += "\"" + this->Author() + "\",";

@@ -1,8 +1,10 @@
 #include <iostream>
 #include <winsock.h>
 #include <mysql.h>
+#include <string>
 #include "../Object/User.h"
 #include "../Object/BookHasCataloged.h"
+#define LOCATIONSIZE 4  //系统内设的分馆最大数量。
 
 
 const char *DBparameter[4] = { "localhost","qinne","111111","library"};
@@ -151,9 +153,87 @@ bool AppendBook(std::string querySentence) {
 	return true;
 }
 
-void BorrowBack(std::string querySentence) {
-	//图书借阅
+
+
+
+
+
+
+
+
+bool BorrowBack(std::string isbn, unsigned location, bool come_back) {
+	//图书借阅与归还。
+	MYSQL *pConn;
+	//连接数据库所需要的参数。
+	pConn = mysql_init(NULL);
+	if (!mysql_real_connect(pConn, DBparameter[0], DBparameter[1], DBparameter[2], DBparameter[3], 0, NULL, 0)) {
+		std::cout << "连接失败，原因：" << mysql_error(pConn) << std::endl;
+		return false;
+	}
+	mysql_query(pConn, "set names gbk"); //设置数据格式。
+
+	if (come_back == true) {//借阅。
+		std::string querySentence = "SELECT LibNum FROM book WHERE BookID = \"" + isbn + "\"";
+		const char* queryChar = querySentence.data(); //转换成查询系统能够接受的类型。
+
+		if (mysql_query(pConn, queryChar)) {
+			std::cout << "数据库查询失败，原因：" << mysql_error(pConn) << std::endl;
+			return false;
+		}
+		MYSQL_RES *result = mysql_store_result(pConn);
+		MYSQL_ROW row;
+
+		std::string countion;
+
+		if (row = mysql_fetch_row(result)) {
+			std::cout << "馆藏信息：" << row[0] << std::endl;
+			countion = row[0];
+		}
+
+		//改完了再返回去。
+		unsigned location_count[LOCATIONSIZE];
+		int i = 0;
+		int iPos0 = 0;
+		//const char* countchar = countion.data();
+		std::cout << "int iPos0 = 0" << std::endl;
+		while (std::string::npos != countion.find("_", 0)) {
+			iPos0 = countion.find("_", 0);
+			location_count[i++] = stoi(countion.substr(0, iPos0));
+			//std::cout << "馆藏量：" << location_count[i - 1] << std::endl;
+			countion = countion.substr(iPos0 + 1, countion.length() - iPos0);
+		}
+		location_count[i] = stoi(countion.substr(0, iPos0));
+		if (location_count[location - 1] == 0) {
+			return false; //容错。
+		}
+		location_count[location - 1]--;
+		countion = std::to_string(location_count[0]) + "_" + std::to_string(location_count[1]) + "_" + std::to_string(location_count[2]) + "_" + std::to_string(location_count[3]);
+
+		querySentence = "UPDATE book SET LibNum = \"" + countion + "\" WHERE BookID = \"" + isbn + "\"";
+		queryChar = querySentence.data();
+		int ret = mysql_query(pConn, queryChar);
+		if (ret != 0) {
+			std::cout << "借阅修改出错：" << mysql_error(pConn) << std::endl;
+			return false;
+		}
+
+		mysql_free_result(result);
+		mysql_close(pConn);
+		return true;
+	}
+	if (come_back == false) {//借阅。
+	
+	}
+
+	return false;
 }
+
+
+
+
+
+
+
 
 void ShowRecoBook(){
 	//显示借阅的书籍。
@@ -197,8 +277,27 @@ void BackBookFromPurchaseBook(std::string isbn, BookHasCataloged &book){
 	book.Catalog(isbn,title,author,count,style);
 }
 
-void AppendUser(std::string querySentence,int iden) {
+bool AppendUser(std::string querySentence) {
 	//用户注册
+	MYSQL *pConn;
+	//连接数据库所需要的参数。
+	pConn = mysql_init(NULL);
+	if (!mysql_real_connect(pConn, DBparameter[0], DBparameter[1], DBparameter[2], DBparameter[3], 0, NULL, 0)) {
+		std::cout << "连接失败，原因：" << mysql_error(pConn) << std::endl;
+		return false;
+	}
+	mysql_query(pConn, "set names gbk"); //设置数据格式。
+
+	const char* queryChar = querySentence.data(); //转换成查询系统能够接受的类型。
+
+	int ret = mysql_query(pConn, queryChar);
+	if (ret != 0) {
+		std::cout << "数据库用户增加出错：" << mysql_error(pConn) << std::endl;
+		return false;
+	}
+	my_ulonglong affected_row = mysql_affected_rows(pConn);
+	std::cout << (int)affected_row << " rows affected." << std::endl;
+	return true;
 }
 
 void BookReco(Book book) {
