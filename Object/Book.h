@@ -31,6 +31,8 @@ public:
 	void Catalog(std::string id,std::string title,std::string author,unsigned count,unsigned style);
 	std::string Isbn() const { return this->bookID; }
 	std::string Title() { return this->title; }
-	short Style() { return this->style; }
+	std::string Author() { return this->author; }
+	unsigned All_Count() { return this->all_count; }
+	unsigned Style() { return this->style; }
 
 };

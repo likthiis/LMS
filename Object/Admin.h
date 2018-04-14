@@ -12,6 +12,7 @@ public:
 	void Back();
 	void Borrow();
 
+	void RecoPurchase();
 	void Aduit();
 	void Catalog();
 	void Purchase();

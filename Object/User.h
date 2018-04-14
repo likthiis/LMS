@@ -26,11 +26,12 @@ public:
 		this->first_name = newName.substr(2, 4);
 	}
 
+	void testShow();
 	void UserLogin(const std::string &id, std::string lastName, std::string firstName, std::string Email);
 
+	void CopyDetail(std::string &id, std::string &lastName, std::string &firstName, std::string &Email);
 	std::string NewUserQuery();
 	void UserNotice();
-	void QueryInfo();
 	Book UserReco();
 	virtual ~User();
 };

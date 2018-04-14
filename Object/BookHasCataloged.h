@@ -9,6 +9,7 @@ private:
 	std::string barcode; //条码号，同样是唯一识别码。
 	unsigned location_count[LOCATIONSIZE]; //实现一个键值对，标号对应分馆，内容是相应的馆藏数量。
 public:
+
 	BookHasCataloged()=default;
 	std::string NewBookQuery();
 	std::string BookBorrow(int loaction);

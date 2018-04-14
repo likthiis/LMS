@@ -8,11 +8,17 @@
 
 
 
-extern void AppendBook(std::string querySentence);
+extern bool AppendBook(std::string querySentence);
 extern void AppendUser(std::string querySentence,int iden);
 extern void BorrowBack(std::string querySentence);
 extern void ShowRecoBook();
 extern void RecoBookToPurchase(std::string isbn,std::string judge);
+extern void ShowIncompleteBook();
+extern void AppendInfo(std::string author);
+extern void AppendInfo(unsigned style_or_count,int choose);
+extern void ShowAcceptBook();
+extern void PurchaseToBook(BookHasCataloged book);
+extern void BackBookFromPurchaseBook(std::string isbn,BookHasCataloged &book);
 
 
 void Admin::Back(){
@@ -44,7 +50,79 @@ void Admin::Borrow() {
 }
 
 
+void Admin::RecoPurchase() {
+	//将通过审核的荐购图书信息修补完整。
+	//这里先设定为将所有条目全部罗列出来，供管理员参考。
+	int choose = 1;
+	while (choose) {
+		ShowIncompleteBook(); //需要显示CanAccept。
+		std::string isbn;
+		std::string author;
+		unsigned count;
+		unsigned style;
+
+
+		std::cout << "请输入要填充信息的书籍对应的ISBN号：";
+		std::cin >> isbn;
+
+	
+		std::cout << "\n请选择要增加的内容：1.作者 2.购入数量 3.书籍类型，或者输入0选择退出:" << std::endl;
+		std::cin >> choose;
+		switch (choose) {
+		case 1: {
+			std::cout << "请输入作者名(格式按照编目时候的来):";
+			std::cin >> author;
+			AppendInfo(author);
+			break;
+		}
+		case 2: {
+			std::cout << "请输入购入数量:";
+			std::cin >> count;
+			AppendInfo(count, choose); //注意这里是2。
+			break;
+		}
+		case 3: {
+			std::cout << "请输入书籍类型:";
+			std::cin >> style;
+			AppendInfo(style, choose); //注意这里是3。
+			break;
+		}
+		case 0:
+			break;
+		}
+		std::cout << "如果还需继续增加请输入1，否则输入0：";
+		std::cin >> choose;
+	}
+	return;
+}
+
 void Admin::Aduit(){
+	//对CanAccept的条目进行确认，加入Book表。
+	int choose = 1;
+	while (choose) {
+		ShowAcceptBook(); //只显示符合条件的书籍。
+		BookHasCataloged book;
+		unsigned location_count[LOCATIONSIZE];
+		std::string barcode;
+		std::cout << "请输入isbn号以供选择：";
+		std::string isbn;
+		BackBookFromPurchaseBook(isbn, book); //从入购单中返回信息，建构起book对象。(这里是引用了book)
+		std::cout << "一图书馆馆藏数目：";
+		std::cin >> location_count[0];
+		std::cout << "二图书馆馆藏数目：";
+		std::cin >> location_count[1];
+		std::cout << "三图书馆馆藏数目：";
+		std::cin >> location_count[2];
+		std::cout << "四图书馆馆藏数目：";
+		std::cin >> location_count[3];
+		std::cout << "输入条形码：";
+		std::cin >> barcode;
+		book.CataLogin(location_count, barcode);
+		PurchaseToBook(book); //正式入库。
+		std::cout << "\n荐购图书入库完成。继续入库输入1，否则输入0：";
+		std::cin >> choose;
+	}
+	return;
 }
 
 void Admin::AdminReco() {
@@ -74,6 +152,7 @@ void Admin::Catalog(){
 
 	while (choose) {
 		BookHasCataloged catabook;
+		system("cls");
 		std::cout << "请输入图书的相关信息，包括\n1.国际唯一标识码\n2.书名\n3.作者\n4.各馆藏点书籍数目\n" <<
 			"5.图书类型\n6.条码号\n" << std::endl;
 
@@ -91,7 +170,7 @@ void Admin::Catalog(){
 		std::cin >> title;
 		std::cout << "作者：(如果有多个作者，请以\"小明_小红_小黄\"的格式进行输入)";
 		std::cin >> author;
-		std::cout << "总购入数目";
+		std::cout << "总购入数目:";
 		std::cin >> all_count;
 		std::cout << "图书类型：";
 		std::cin >> style;
@@ -114,7 +193,13 @@ void Admin::Catalog(){
 
 		std::string query = catabook.NewBookQuery();
 
-		AppendBook(query);
+		bool yn = AppendBook(query);
+		if (yn == false) {
+			std::cout << "增书出错" << std::endl;
+		}
+		if (yn == true) {
+			std::cout << "增书成功" << std::endl;
+		}
 
 		std::cout << "\n继续添加图书请输入1，否则输入0：";
 		std::cin >> choose;
@@ -134,6 +219,7 @@ void Admin::Register() {
 	int choose = 1;
 
 	while (choose) {
+		system("cls");
 		std::string ID;
 		std::string last_name;
 		std::string first_name;
