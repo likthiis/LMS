@@ -13,37 +13,29 @@ extern void UserPanel(Teacher stu_or_tea);
 extern void AdminPanel(Admin admin);
 
 void Login_User() {
-	/*使用MySQL查询输入信息，若存在
-	 *用户则提供用户面板(根据用户类型决定)
+	/* 使用MySQL查询输入信息，若存在
+	 * 用户则提供用户面板(用户面板
+	 * 根据用户类型决定)。
 	 */
 	std::string userId, password;
-
 Log:
 	system("cls");
-	std::cout << "请输入用户id和密码(或输入0和0选择离开)：" << std::endl;
-
+	std::cout << "请输入用户名和密码(当输入用户名为0，密码为0时选择离开)：" << std::endl;
 	std::cout << "用户名：";
 	std::cin >> userId;
 	std::cout << "密码：";
 	std::cin >> password;
-
 	if (userId == "0"&&password == "0") {
 		return;
 	}
-
-	//使用MySQL查询信息。
-	std::string querySentence1 = "SELECT * FROM student where ID='" + userId + "' and Password='" + password + "'"; //查询语言。
-	std::string querySentence2 = "SELECT * FROM teacher where ID='" + userId + "' and Password='" + password + "'"; //查询语言。
-	std::string querySentence3 = "SELECT * FROM admin where ID='" + userId + "' and Password='" + password + "'"; //查询语言。
-																													
-	User basement; //用户的基本信息先行注入该类。
+	//SQL语句。
+	std::string querySentence1 = "SELECT * FROM student where ID='" + userId + "' and Password='" + password + "'"; 
+	std::string querySentence2 = "SELECT * FROM teacher where ID='" + userId + "' and Password='" + password + "'"; 
+	std::string querySentence3 = "SELECT * FROM admin where ID='" + userId + "' and Password='" + password + "'"; 																									
+	User basement; //保存用户信息的类。
 	unsigned count;
 	std::string info;
-	
-	int ifExist = DBLoginCheck(querySentence1, querySentence2, querySentence3, basement, count, info);//我们相信这里会起作用的。
-
-	//ifExist = 1; //测试代码。
-	
+	int ifExist = DBLoginCheck(querySentence1, querySentence2, querySentence3, basement, count, info);
 
 	switch (ifExist)
 	{

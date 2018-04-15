@@ -18,8 +18,9 @@ extern void ShowIncompleteBook();
 extern bool AppendInfo(std::string author,std::string isbn);
 extern bool AppendInfo(unsigned style_or_count, std::string isbn,int choose);
 extern void ShowAcceptBook();
-extern void PurchaseToBook(BookHasCataloged book);
+extern bool PurchaseToBook(BookHasCataloged book);
 extern void BackBookFromPurchaseBook(std::string isbn,BookHasCataloged &book);
+extern void Complete(std::string isbn);
 
 
 void Admin::Back(){
@@ -102,6 +103,7 @@ void Admin::RecoPurchase() {
 			}
 			if (yn == true) {
 				std::cout << "作者信息添加成功" << std::endl;
+				Complete(isbn);
 				Sleep(2000);
 			}
 			break;
@@ -116,6 +118,7 @@ void Admin::RecoPurchase() {
 			}
 			if (yn == true) {
 				std::cout << "数量信息添加成功" << std::endl;
+				Complete(isbn);
 				Sleep(2000);
 			}
 			break;
@@ -130,6 +133,7 @@ void Admin::RecoPurchase() {
 			}
 			if (yn == true) {
 				std::cout << "书籍信息添加成功" << std::endl;
+				Complete(isbn);
 				Sleep(2000);
 			}
 			break;
@@ -147,13 +151,18 @@ void Admin::Aduit(){
 	//对CanAccept的条目进行确认，加入Book表。
 	int choose = 1;
 	while (choose) {
+		system("cls");
+		std::cout << "合格的书籍如表所示：" << std::endl;
 		ShowAcceptBook(); //只显示符合条件的书籍。
+		std::cout << "显示完毕" << std::endl;
 		BookHasCataloged book;
 		unsigned location_count[LOCATIONSIZE];
 		std::string barcode;
 		std::cout << "请输入isbn号以供选择：";
 		std::string isbn;
-		BackBookFromPurchaseBook(isbn, book); //从入购单中返回信息，建构起book对象。(这里是引用了book)
+		getchar();
+		std::getline(std::cin, isbn);
+		BackBookFromPurchaseBook(isbn, book); //从入购单中返回信息，建构起BookHasCataloged类book对象。(这里是引用了book)
 		std::cout << "一图书馆馆藏数目：";
 		std::cin >> location_count[0];
 		std::cout << "二图书馆馆藏数目：";
@@ -165,7 +174,15 @@ void Admin::Aduit(){
 		std::cout << "输入条形码：";
 		std::cin >> barcode;
 		book.CataLogin(location_count, barcode);
-		PurchaseToBook(book); //正式入库。
+		bool yn = PurchaseToBook(book); //正式入库。
+		if (yn == false) {
+			std::cout << "增加出错" << std::endl;
+			Sleep(1000);
+		}
+		if (yn == true) {
+			std::cout << "入库成功，新书到位！" << std::endl;
+			Sleep(1000);
+		}
 		std::cout << "\n荐购图书入库完成。继续入库输入1，否则输入0：";
 		std::cin >> choose;
 	}
@@ -225,7 +242,8 @@ void Admin::Catalog(){
 		std::string barcode;
 
 		std::cout << "\n国际唯一标识码：";
-		std::cin >> bookID;
+		getchar();
+		std::getline(std::cin, bookID);
 		std::cout << "书名：";
 		std::cin >> title;
 		std::cout << "作者：(如果有多个作者，请以\"小明_小红_小黄\"的格式进行输入)";
