@@ -10,9 +10,9 @@
 extern bool AppendBook(std::string querySentence);
 extern bool AppendUser(std::string querySentence);
 extern bool BorrowBack(std::string isbn, unsigned location, bool come_back);
-extern void ShowRecoBook();
+extern bool ShowRecoBook();
 extern bool RecoBookToPurchase(std::string isbn,std::string judge);
-extern void ShowIncompleteBook();
+extern bool ShowIncompleteBook();
 extern bool AppendInfo(std::string author,std::string isbn);
 extern bool AppendInfo(unsigned style_or_count, std::string isbn,int choose);
 extern void ShowAcceptBook();
@@ -79,21 +79,24 @@ void Admin::RecoPurchase() {
 	int choose = 1;
 	while (choose) {
 		system("cls");
+		std::cout << "-------------------------------" << std::endl;
 		std::cout << "显示目前信息尚未完整的初审合格书籍" << std::endl;
-		ShowIncompleteBook(); //需要显示CanAccept。
+		bool yn = ShowIncompleteBook(); 
+		if (yn == false) {
+			std::cout << "无可修改或增添信息的图书，现在自动返回上一级" << std::endl;
+			Sleep(2000);
+			return;
+		}
 		std::cout << "展示完毕" << std::endl;
 		std::string isbn;
 		std::string author;
 		unsigned count;
 		unsigned style;
-
-
 		std::cout << "请输入要填充信息的书籍对应的ISBN号：";
 		getchar();
 		std::getline(std::cin, isbn);
 		std::cout << "\n请选择要增加的内容：1.作者 2.购入数量 3.书籍类型，或者输入0选择退出:";
 		std::cin >> choose;
-		bool yn;
 		switch (choose) {
 		case 1: {
 			std::cout << "请输入作者名(格式按照编目时候的来):";
@@ -192,14 +195,20 @@ void Admin::Aduit(){
 }
 
 void Admin::AdminReco() {
-	int choose = 1;
-	std::cout << "管理员荐购处理" << std::endl;
+	std::string choose;
 	std::string isbn;
 	std::string yesno;
-	while (choose) {
+	while (1) {
 		system("cls");
-		std::cout << "所有待审核书籍显示如下" << std::endl;
-		ShowRecoBook(); //展示所有待处理的书籍。
+		std::cout << "-------------------------" << std::endl;
+		std::cout << "      管理员荐购处理" << std::endl;
+		std::cout << "所有待审核图书显示如下" << std::endl;
+		bool empty = ShowRecoBook(); //展示所有待处理的书籍。
+		if (empty == false) {
+			std::cout << "已无可审核图书，自动返回上一级。" << std::endl;
+			Sleep(5000);
+			return;
+		}
 		std::cout << "展示完毕\n" << std::endl;
 
 		std::cout << "输入待处理的书籍的isbn号：";
@@ -218,9 +227,19 @@ void Admin::AdminReco() {
 			std::cout << "初审通过" << std::endl;
 			Sleep(2000);
 		}
-
-		std::cout << "继续处理输入1，返回上一级输入0";
+		std::cout << "-------------------------" << std::endl;
+		std::cout << "继续处理输入1，返回上一级输入0：";
+Input:
 		std::cin >> choose;
+		if (choose != "0"&&choose != "1") {
+			system("cls");
+			std::cout << "-------------------------" << std::endl;
+			std::cout << "您的输入有误，请重新输入：";
+			goto Input;
+		}
+		if (choose == "0") {
+			return;
+		}
 	}
 	return;
 }
@@ -291,22 +310,27 @@ void Admin::Purchase(){
 	//可以用在荐购时审核通过后，对图书有一个总体的购买。
 }
 
-
-
-
 void Admin::Register() {
 	//批量用户注册。
-	int choose = 1;
-
-	while (choose) {
+	std::string choose;
+	while (1) {
+Input:
 		system("cls");
 		std::string ID;
 		std::string last_name;
 		std::string first_name;
 		std::string email;
 
-		std::cout << "\n添加学生请输入1，添加教师请输入2：";
+		std::cout << "----------------------------------------------\n";
+		std::cout << "添加学生请输入1，添加教师请输入2，返回上一次请输入3\n\n请选择：";
 		std::cin >> choose;
+		if (choose == "3") {
+			return;
+		}
+		if (choose != "1"&&choose != "2"&&choose != "3") {
+			std::cout << "您的输入有误，请重新输入。" << std::endl;
+			goto Input;
+		}
 		std::cout << "请输入用户的相关信息，包括\n1.唯一标识码\n2.姓\n3.名\n4.邮箱\n";
 		std::cout << "唯一标识码：";
 		std::cin >> ID;
@@ -318,11 +342,10 @@ void Admin::Register() {
 		std::cin >> email;
 
 		bool yn;
-
-		if (choose == 1) {
+		if (choose == "1") {
 			Student stu;
 			stu.UserLogin(ID, last_name, first_name, email);
-			std::string query = stu.NewUserQuery(choose);
+			std::string query = stu.NewUserQuery(std::stoi(choose));
 			yn = AppendUser(query);
 			if (yn == true) {
 				std::cout << "用户注册成功。" << std::endl;
@@ -330,11 +353,13 @@ void Admin::Register() {
 			if (yn == false) {
 				std::cout << "用户注册失败。" << std::endl;
 			}
+			std::cout << "\n继续添加用户请输入1，否则输入0：";
+			std::cin >> choose;
 		}
-		if (choose == 2) {
+		if (choose == "2") {
 			Teacher tea;
 			tea.UserLogin(ID, last_name, first_name, email);
-			std::string query = tea.NewUserQuery(choose);
+			std::string query = tea.NewUserQuery(std::stoi(choose));
 			yn = AppendUser(query);
 			if (yn == true) {
 				std::cout << "用户注册成功。" << std::endl;
@@ -342,10 +367,12 @@ void Admin::Register() {
 			if (yn == false) {
 				std::cout << "用户注册失败。" << std::endl;
 			}
+			std::cout << "\n继续添加用户请输入1，否则输入0：";
+			std::cin >> choose;
 		}
-
-		std::cout << "\n继续添加用户请输入1，否则输入0：";
-		std::cin >> choose;
+		else {
+			std::cout << "您的输入有误，请重新输入。" << std::endl;
+		}
 	}
 	return;
 }

@@ -189,20 +189,27 @@ bool BorrowBack(std::string isbn, unsigned location, bool come_back) {
 }
 
 //显示处在荐购待审核状态的图书。
-void ShowRecoBook(){
+bool ShowRecoBook(){
 	MYSQL *pConn = DBconnection();
 	MYSQL_RES *result;
 	MYSQL_ROW row;
 	std::string querySentence = "SELECT * FROM recommendationbook";
 	result = mysql_store_result(queryObject(pConn,querySentence));
 	//搜到图书结果后的格式处理。
+	if (mysql_num_rows(result) == 0) {
+		mysql_free_result(result);
+		mysql_close(pConn);
+		return false;
+	}
 	while (row = mysql_fetch_row(result)) {
+		std::cout << "------------------------------------" << std::endl;
 		std::cout << "图书ISBN/ISSN：" << row[0] << std::endl;
 		std::cout << "图书标题：" << row[1] << std::endl;
 	}
+	std::cout << "------------------------------------" << std::endl;
 	mysql_free_result(result);
 	mysql_close(pConn);
-	return;
+	return true;
 }
 
 //图书审核。
@@ -247,15 +254,19 @@ bool RecoBookToPurchase(std::string isbn, std::string judge) {
 }
 
 //展示在荐购审核通过后到入库之前这段时间，相关信息尚未完整的图书及其信息。
-void ShowIncompleteBook(){
+bool ShowIncompleteBook(){
 	MYSQL *pConn = DBconnection();
-	std::string querySentence = "SELECT * FROM purchasebook";
+	std::string querySentence = "SELECT * FROM purchasebook WHERE CanAccept = 0";
 	MYSQL_RES *result;
 	MYSQL_ROW row;
 	result = mysql_store_result(queryObject(pConn,querySentence));
+	if (mysql_num_rows(result) == 0) {
+		return false;
+	}
 
 	//搜到图书结果后的格式处理。
 	while (row = mysql_fetch_row(result)) {
+		std::cout << "------------------------------------------------" << std::endl;
 		std::cout << row[0] << " " << row[1];
 		if (row[2] == NULL) {
 			std::cout << " " << "作者未填";
@@ -271,12 +282,13 @@ void ShowIncompleteBook(){
 		else { std::cout << " " << row[4]; }
 		std::cout << std::endl;
 	}
+	std::cout << "------------------------------------------------" << std::endl;
 	mysql_free_result(result);
 	mysql_close(pConn);
-	return;
+	return true;
 }
 
-//显示相关信息已经完整的未入库可购入图书。
+//将相关信息已经完整的未入库可购入图书设置为待入库状态。
 void Complete(std::string isbn) { 
 	MYSQL *pConn = DBconnection();
 	std::string querySentence = "UPDATE purchasebook SET CanAccept = 1 WHERE Author !=\"\" AND Number != \"\" AND Style != \"\"";

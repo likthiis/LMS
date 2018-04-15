@@ -1,11 +1,4 @@
-﻿  AdminPanel.cpp
-  User.cpp
-  Admin.cpp
-  正在生成代码...
-  正在跳过...(未检测到相关更改)
-  SQLIntermediary.cpp
-  UserPanel.cpp
-  Teacher.cpp
-  Student.cpp
-  Login.cpp
+﻿  SQLIntermediary.cpp
+c:\users\wzf\desktop\lms\code\system\lms\lms\sqluse\sqlintermediary.cpp(152): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\wzf\desktop\lms\code\system\lms\lms\sqluse\sqlintermediary.cpp(177): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
   LMS.vcxproj -> C:\Users\WZF\Desktop\LMS\code\system\LMS\x64\Debug\LMS.exe
