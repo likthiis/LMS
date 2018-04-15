@@ -8,7 +8,7 @@ private:
 public:
 
 	//自定义操作。
-
+	void ShowAdminName();
 	void Back();
 	void Borrow();
 

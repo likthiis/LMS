@@ -7,8 +7,6 @@
 #include <Windows.h>
 #define LOCATIONSIZE 4  //系统内设的分馆最大数量。
 
-
-
 extern bool AppendBook(std::string querySentence);
 extern bool AppendUser(std::string querySentence);
 extern bool BorrowBack(std::string isbn, unsigned location, bool come_back);
@@ -22,6 +20,10 @@ extern bool PurchaseToBook(BookHasCataloged book);
 extern void BackBookFromPurchaseBook(std::string isbn,BookHasCataloged &book);
 extern void Complete(std::string isbn);
 
+
+void Admin::ShowAdminName(){
+	std::cout << this->Name();
+}
 
 void Admin::Back(){
 	system("cls");

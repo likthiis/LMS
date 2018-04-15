@@ -11,9 +11,7 @@
 extern void SearchBook(std::string querySentence);
 
 void Search() {
-	
-	int choose=1;
-	
+	int choose = 1;
 	while (choose) {
 		system("cls");
 		std::cout << "可选检索条件：\n1.ISBN号\n2.书名\n3.退出\n请选择：";
@@ -21,19 +19,17 @@ void Search() {
 		if (choose == 1) {
 			std::cout << "请输入ISBN号：";
 			std::string isbn;
-			//std::cin >> isbn;
 			std::getchar();
 			std::getline(std::cin, isbn);
-			std::string query= "SELECT * FROM book WHERE BookID = '"+isbn+"'";
-			//std::cout << query << std::endl;
+			std::string query = "SELECT * FROM book WHERE BookID = '"+isbn+"'";
 			SearchBook(query);
 		}
 		if (choose == 2) {
 			std::cout << "请输入书名：";
 			std::string title;
-			std::cin >> title;
+			std::getchar();
+			std::getline(std::cin, title);
 			std::string query = "SELECT * FROM book WHERE Title = '" + title + "'";
-
 			SearchBook(query);
 		}
 		if (choose == 3) {

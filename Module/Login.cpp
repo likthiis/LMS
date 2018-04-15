@@ -20,6 +20,7 @@ void Login_User() {
 	std::string userId, password;
 Log:
 	system("cls");
+	std::cout << "-------------------用户登录界面-------------------" << std::endl;
 	std::cout << "请输入用户名和密码(当输入用户名为0，密码为0时选择离开)：" << std::endl;
 	std::cout << "用户名：";
 	std::cin >> userId;

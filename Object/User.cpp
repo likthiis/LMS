@@ -13,6 +13,10 @@ void User::testShow(){
 	return;
 }
 
+std::string User::Name() {
+	return this->last_name + this->first_name;
+}
+
 void User::UserLogin(const std::string & id, std::string lastName, std::string firstName, std::string Email){
 	this->ID = id;
 	this->last_name = lastName;
@@ -56,6 +60,8 @@ void User::UserNotice()
 Book User::UserReco(){
 	//只需输入isbn和书名即可。
 	std::string isbn, title;
+	system("cls");
+	std::cout << "---------------------" << std::endl;
 	std::cout << "请输入唯一识别码和书名:\n请输入唯一识别码：";
 	getchar();
 	std::getline(std::cin, isbn);
@@ -65,7 +71,6 @@ Book User::UserReco(){
 	return book;
 }
 
-User::~User()
-{
+User::~User(){
 }
 

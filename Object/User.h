@@ -28,7 +28,7 @@ public:
 
 	void testShow();
 	void UserLogin(const std::string &id, std::string lastName, std::string firstName, std::string Email);
-
+	std::string Name();
 	void CopyDetail(std::string &id, std::string &lastName, std::string &firstName, std::string &Email);
 	std::string NewUserQuery(int choose);
 	void UserNotice();
