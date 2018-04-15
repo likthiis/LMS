@@ -5,7 +5,7 @@
 #include <windows.h>
 
 extern void Search();
-extern void BookReco(Book book); //将信息注入图书荐购表。
+extern bool BookReco(Book book); //将信息注入图书荐购表。
 
 
 void UserPanel(Student stu_or_tea) {
@@ -30,7 +30,17 @@ void UserPanel(Student stu_or_tea) {
 		if (choose == 3) {
 			Book recoBook;
 			recoBook = stu_or_tea.UserReco();
-			BookReco(recoBook);
+			bool yn = BookReco(recoBook);
+			if (yn == true) {
+				system("cls");
+				std::cout << "荐购成功！" << std::endl;
+				Sleep(2000);
+			}
+			if (yn == false) {
+				system("cls");
+				std::cout << "荐购失败！" << std::endl;
+				Sleep(2000);
+			}
 			continue;
 		}
 		if (choose == 4) {
@@ -47,7 +57,7 @@ void UserPanel(Teacher stu_or_tea) {
 	stu_or_tea.UserNotice();//通知荐购书到位了没。
 
 	while (1) {
-		system("cls");
+		//system("cls");
 		std::cout << "菜单：1.查询自己的信息 2.查询书籍信息 3.荐购 4.退出登录\n请输入你的选择：";
 		std::cin >> choose;//先不写容错。
 		if (choose == 1) {
@@ -63,7 +73,17 @@ void UserPanel(Teacher stu_or_tea) {
 		if (choose == 3) {
 			Book recoBook;
 			recoBook = stu_or_tea.UserReco();
-			BookReco(recoBook);
+			bool yn = BookReco(recoBook);
+			if (yn == true) {
+				system("cls");
+				std::cout << "荐购成功！" << std::endl;
+				Sleep(2000);
+			}
+			if (yn == false) {
+				system("cls");
+				std::cout << "荐购失败！" << std::endl;
+				Sleep(2000);
+			}
 			continue;
 		}
 		if (choose == 4) {

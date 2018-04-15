@@ -57,9 +57,10 @@ Book User::UserReco(){
 	//只需输入isbn和书名即可。
 	std::string isbn, title;
 	std::cout << "请输入唯一识别码和书名:\n请输入唯一识别码：";
-	std::cin >> isbn;
+	getchar();
+	std::getline(std::cin, isbn);
 	std::cout << "请输入书名：";
-	std::cin >> title;
+	std::getline(std::cin, title);
 	Book book(isbn, title);
 	return book;
 }

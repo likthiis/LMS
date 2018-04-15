@@ -13,31 +13,33 @@ extern bool AppendBook(std::string querySentence);
 extern bool AppendUser(std::string querySentence);
 extern bool BorrowBack(std::string isbn, unsigned location, bool come_back);
 extern void ShowRecoBook();
-extern void RecoBookToPurchase(std::string isbn,std::string judge);
+extern bool RecoBookToPurchase(std::string isbn,std::string judge);
 extern void ShowIncompleteBook();
-extern void AppendInfo(std::string author);
-extern void AppendInfo(unsigned style_or_count,int choose);
+extern bool AppendInfo(std::string author,std::string isbn);
+extern bool AppendInfo(unsigned style_or_count, std::string isbn,int choose);
 extern void ShowAcceptBook();
 extern void PurchaseToBook(BookHasCataloged book);
 extern void BackBookFromPurchaseBook(std::string isbn,BookHasCataloged &book);
 
 
 void Admin::Back(){
+	system("cls");
 	std::cout << "图书归还功能\n请输入ISBN号：";
 	std::string isbn;
-	std::cin >> isbn;
+	getchar();
+	std::getline(std::cin, isbn);//因为输入带空格。
 	std::cout << "请选择馆藏地点：一图书馆选1，二图书馆选2，三图书馆选3，四图书馆选4\n请选择：";
-	int location;
+	unsigned location;
 	std::cin >> location;
 	std::string querySentence = "查询语句";
 
 	bool yn = BorrowBack(isbn, location, false);
 	if (yn == true) {
-		std::cout << "借阅成功" << std::endl;
+		std::cout << "归还成功" << std::endl;
 		Sleep(2000);
 	}
 	if (yn == false) {
-		std::cout << "借阅失败" << std::endl;
+		std::cout << "归还失败" << std::endl;
 		Sleep(2000);
 	}
 
@@ -45,10 +47,11 @@ void Admin::Back(){
 }
 
 void Admin::Borrow() {
+	system("cls");
 	std::cout << "图书借阅功能\n请输入ISBN号：";
 	std::string isbn;
 	getchar();
-	std::getline(std::cin, isbn);
+	std::getline(std::cin, isbn);//因为输入带空格。
 	std::cout << "请选择馆藏地点：一图书馆选1，二图书馆选2，三图书馆选3，四图书馆选4\n请选择：";
 	unsigned location; 
 	std::cin >> location;
@@ -72,7 +75,10 @@ void Admin::RecoPurchase() {
 	//这里先设定为将所有条目全部罗列出来，供管理员参考。
 	int choose = 1;
 	while (choose) {
+		system("cls");
+		std::cout << "显示目前信息尚未完整的初审合格书籍" << std::endl;
 		ShowIncompleteBook(); //需要显示CanAccept。
+		std::cout << "展示完毕" << std::endl;
 		std::string isbn;
 		std::string author;
 		unsigned count;
@@ -80,28 +86,52 @@ void Admin::RecoPurchase() {
 
 
 		std::cout << "请输入要填充信息的书籍对应的ISBN号：";
-		std::cin >> isbn;
-
-	
-		std::cout << "\n请选择要增加的内容：1.作者 2.购入数量 3.书籍类型，或者输入0选择退出:" << std::endl;
+		getchar();
+		std::getline(std::cin, isbn);
+		std::cout << "\n请选择要增加的内容：1.作者 2.购入数量 3.书籍类型，或者输入0选择退出:";
 		std::cin >> choose;
+		bool yn;
 		switch (choose) {
 		case 1: {
 			std::cout << "请输入作者名(格式按照编目时候的来):";
 			std::cin >> author;
-			AppendInfo(author);
+			yn = AppendInfo(author, isbn);
+			if (yn == false) {
+				std::cout << "增加出错" << std::endl;
+				Sleep(2000);
+			}
+			if (yn == true) {
+				std::cout << "作者信息添加成功" << std::endl;
+				Sleep(2000);
+			}
 			break;
 		}
 		case 2: {
 			std::cout << "请输入购入数量:";
 			std::cin >> count;
-			AppendInfo(count, choose); //注意这里是2。
+			yn = AppendInfo(count, isbn, choose); //注意这里是2。
+			if (yn == false) {
+				std::cout << "增加出错" << std::endl;
+				Sleep(2000);
+			}
+			if (yn == true) {
+				std::cout << "数量信息添加成功" << std::endl;
+				Sleep(2000);
+			}
 			break;
 		}
 		case 3: {
 			std::cout << "请输入书籍类型:";
 			std::cin >> style;
-			AppendInfo(style, choose); //注意这里是3。
+			yn = AppendInfo(style, isbn, choose); //注意这里是3。
+			if (yn == false) {
+				std::cout << "增加出错" << std::endl;
+				Sleep(2000);
+			}
+			if (yn == true) {
+				std::cout << "书籍信息添加成功" << std::endl;
+				Sleep(2000);
+			}
 			break;
 		}
 		case 0:
@@ -143,19 +173,32 @@ void Admin::Aduit(){
 }
 
 void Admin::AdminReco() {
-	std::cout << "管理员荐购处理" << std::endl;
 	int choose = 1;
+	std::cout << "管理员荐购处理" << std::endl;
 	std::string isbn;
 	std::string yesno;
 	while (choose) {
 		system("cls");
+		std::cout << "所有待审核书籍显示如下" << std::endl;
 		ShowRecoBook(); //展示所有待处理的书籍。
+		std::cout << "展示完毕\n" << std::endl;
 
 		std::cout << "输入待处理的书籍的isbn号：";
-		std::cin >> isbn;
+		getchar();
+		std::getline(std::cin, isbn);
 		std::cout << "请问是通过审核还是不通过？[Y/N]：";
 		std::cin >> yesno;
-		RecoBookToPurchase(isbn, yesno); //审核操作。
+		bool yn = RecoBookToPurchase(isbn, yesno); //审核操作。
+		if (yn == false) {
+			system("cls");
+			std::cout << "数据库操作失败，请联系0754-88888888" << std::endl;
+			Sleep(2000);
+		}
+		if (yn == true) {
+			system("cls");
+			std::cout << "初审通过" << std::endl;
+			Sleep(2000);
+		}
 
 		std::cout << "继续处理输入1，返回上一级输入0";
 		std::cin >> choose;
